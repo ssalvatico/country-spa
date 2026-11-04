@@ -5,7 +5,7 @@ import { Country } from '../interfaces/country';
 import { env } from '../../../environments/env';
 
 @Injectable({providedIn: 'root'})
-export class ServiceNameService {
+export class CountriesService {
 
     private apiUrl:string = env.API_URL;
     private apiKey:string = env.API_KEY;

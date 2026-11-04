@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "countryApp": {
+    "countrySPA": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -66,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "countryApp:build:production"
+              "buildTarget": "countrySPA:build:production"
             },
             "development": {
-              "buildTarget": "countryApp:build:development"
+              "buildTarget": "countrySPA:build:development"
             }
           },
           "defaultConfiguration": "development"

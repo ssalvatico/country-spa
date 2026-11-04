@@ -1,0 +1,15 @@
+<input
+    type="text"
+    [placeholder]="placeholder"
+    class="form-control"
+    (keyup.enter)="emitInputResult()"
+    #txtSearchInput
+>
+<!-- Otra opcion podria haber sido esta (ver tambien el .ts): -->
+<!-- <input
+    type="text"
+    [placeholder]="placeholder"
+    class="form-control"
+    (keyup.enter)="emitInputResult( txtSearchInput.value )"
+    #txtSearchInput
+> -->

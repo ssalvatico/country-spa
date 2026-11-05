@@ -37,8 +37,13 @@ export class CountriesService {
             case SearchTerm.Region:
                 searchUrl = `${this.apiUrl}`;
                 params = params.set('region',term);
-                break;    
+                break;
             
+            case SearchTerm.AlphaCode3:
+                searchUrl = `${this.apiUrl}/codes.aplha3`;
+                params = params.set('q',term);
+                break;
+
             default:
                 throw new Error("Invalid search term.");
         }

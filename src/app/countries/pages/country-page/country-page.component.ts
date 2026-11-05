@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-countries-country-page',
@@ -6,4 +7,14 @@ import { Component } from '@angular/core';
   styles: ``,
   templateUrl: './country-page.component.html',
 })
-export class CountryPageComponent {}
+export class CountryPageComponent implements OnInit{
+
+  constructor( private activatedRoute:ActivatedRoute ){}
+
+  ngOnInit(): void {
+    this.activatedRoute.params
+      .subscribe(({ id }) => {
+        console.log(id);
+      });
+  }
+}

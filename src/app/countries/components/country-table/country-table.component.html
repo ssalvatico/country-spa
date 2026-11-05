@@ -1,0 +1,47 @@
+@if (countries.length === 0) {
+    <div class="alert-warning text-center">
+        No hay países para mostrar
+    </div>    
+}
+
+@else {
+    <ng-container *ngTemplateOutlet="table"></ng-container>
+}
+
+<ng-template #table>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Icon</th>
+                <th class="text-center">Bandera</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Capital</th>
+                <th class="text-center">Población</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (country of countries; track $index) {
+                <tr>
+                    <td class="text-center">{{ $index + 1 }}</td>
+                    <td class="text-center">{{ country.flag.emoji }}</td>
+                    <td class="text-center"><img src="{{ country.flag.url_svg }}" alt="{{ country.names.common }}"></td>
+                    <td class="text-center">{{ country.names.common }}</td>
+                    <td class="text-center">{{ country.capitals[0]?.name }}</td>
+                    <td class="text-center">{{ country.population | number }}</td>
+                    <td class="text-center"><a href="#">Ver más</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</ng-template>
+
+
+
+
+<!-- <ul>
+        @for (country of countries(); track $index) {
+            <li>{{ country.capitals[0].name }} - {{ country.names.official }}</li>
+            }
+</ul> -->

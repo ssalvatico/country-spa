@@ -3,33 +3,31 @@ export interface Country {
 }
 
 export interface Data {
-    objects: Object[];
     meta:    Meta;
+    objects: Object[];
 }
 
 export interface Meta {
-    total:      number;
     count:      number;
-    limit:      number;
-    offset:     number;
-    more:       boolean;
-    request_id: string;
     duration:   number;
+    limit:      number;
+    more:       boolean;
+    offset:     number;
+    request_id: string;
+    total:      number;
 }
 
 export interface Object {
-    names:           Names;
-    codes:           Codes;
-    capitals:        Capital[];
-    flag:            Flag;
-    region:          string;
-    subregion:       string;
+    _match:          Match[];
+    _meta:           MetaClass;
     area:            Area;
     assets:          any[];
     borders:         string[];
     calling_codes:   string[];
+    capitals:        Capital[];
     cars:            Cars;
     classification:  Classification;
+    codes:           Codes;
     continents:      string[];
     coordinates:     Coordinates;
     currencies:      Currency[];
@@ -37,22 +35,24 @@ export interface Object {
     demonyms:        Demonyms;
     descriptions:    Descriptions;
     economy:         Economy;
+    flag:            Flag;
     government_type: string;
     landlocked:      boolean;
     languages:       Language[];
     leaders:         Leader[];
     links:           Links;
     memberships:     { [key: string]: boolean };
+    names:           Names;
     number_format:   NumberFormat;
     parent:          Parent;
     population:      number;
     postal_code:     PostalCode;
+    region:          string;
+    subregion:       string;
     timezones:       string[];
     tlds:            string[];
     units:           Units;
     uuid:            string;
-    _match:          Match[];
-    _meta:           MetaClass;
 }
 
 export interface Match {

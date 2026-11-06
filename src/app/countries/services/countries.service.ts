@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, delay, Observable, of } from 'rxjs';
 
 import { Country, Object } from '../interfaces/country';
 import { env, SearchTerm } from '../../../environments/env';
@@ -50,7 +50,8 @@ export class CountriesService {
         
         return this.httpClient.get<Country>(searchUrl,{headers, params})
             .pipe(
-                catchError( error => of(null))
+                catchError( () => of(null)),
+                delay( 500 )
             );
     }
 

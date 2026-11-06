@@ -32,9 +32,8 @@
                 
                 <li class="list-group-item">
                     <strong>Idioma: </strong>
-                    @for (lang of country.languages; track $index) {
-                        @if (!$last) { {{ lang.name }}, }
-                        @else { {{lang.name}}. }
+                    @for (lang of country.languages; track lang.iso639_3; let last = $last) {
+                        {{ lang.name }}{{ last ? '.' : ', ' }}
                     }
                 </li>
                 
@@ -48,19 +47,41 @@
                 
                 <li class="list-group-item">
                     <strong>Moneda: </strong>
-                    @for (currency of country.currencies; track $index){
-                        @if (!$last){ {{ currency.code }}{{ currency.symbol }}, }
-                        @else { {{ currency.code }}{{ currency.symbol }}. }
+                    @for (currency of country.currencies; track currency.code; let last = $last) {
+                        {{ currency.name }} ({{ currency.code }}) - {{ currency.symbol }}{{ last ? '.' : ', ' }}
                     }
                 </li>
                 
                 <li class="list-group-item">
-                    <strong>Gentilicio: </strong>{{ country.demonyms.eng.f }} - {{ country.demonyms.eng.f }}
+                    <strong>Gentilicio: </strong>{{ country.demonyms.eng.m }} - {{ country.demonyms.eng.f }}
                 </li>
-                
+
+                <li class="list-group-item">
+                    <strong>Gobierno: </strong>{{ country.government_type }}
+                </li>
+
+                <li class="list-group-item">
+                    <strong>Zona horaria: </strong>{{ country.timezones }}
+                </li>
+
+                <li class="list-group-item">
+                    <strong>Prefijo telefónico: </strong>
+                    +{{ country.calling_codes }}
+                </li>
+
+                <li class="list-group-item">
+                    <strong>Dominio: </strong>{{ country.tlds }}
+                </li>
+
+                <li class="list-group-item">
+                    <strong>Miembro de la ONU: </strong>
+                    {{ country.memberships['un'] ? 'Sí' : 'No' }}
+                </li>
+
                 <li class="list-group-item">
                     <strong>Código: </strong>{{ country.codes.ccn3 | number }}
                 </li>
+            
             </ul>
         </div>
 

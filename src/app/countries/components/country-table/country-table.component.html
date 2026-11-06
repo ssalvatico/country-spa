@@ -30,7 +30,7 @@
                     <td class="text-center">{{ country.names.common }}</td>
                     <td class="text-center">{{ country.capitals[0]?.name }}</td>
                     <td class="text-center">{{ country.population | number }}</td>
-                    <td class="text-center"><a href="#">Ver más</a></td>
+                    <td class="text-center"><a [routerLink]="['/countries/by', country.codes.alpha_3]">Info</a></td>
                 </tr>
             }
         </tbody>

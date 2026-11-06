@@ -1,12 +1,85 @@
-@if (country) {
-    <div>
-        <div class="row">
-            <div class="col-12">
-                <h2>Pais: <strong>{{ country.names.common }}</strong></h2>
+@if (getCountry; as country) {
+
+    <div class="row">
+        <div class="col-12">
+            <h3>{{ country.flag.emoji }} <strong>{{ country.names.common }}</strong></h3>
+            <ul>
+                <li>Oficial name: <strong><i>{{ country.names.official }}</i></strong></li>
+                <li>Capital: <strong><i>{{ country.capitals[0]?.name }}</i></strong></li>
+            </ul>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row my-5">    
+        <h4>Description:</h4>
+        <p>{{ country.descriptions.long }}</p>
+    </div>
+    
+    <div class="row">
+
+        <div class="col-4">
+            <h3>Bandera</h3>
+            <img [src]="country.flag.url_svg" [alt]="country.names.common" class="img-thumbnail">
+        </div>
+
+        <div class="col">
+            <ul class="list-group">
+                
+                <li class="list-group-item">
+                    <strong>Población: </strong>{{ country.population | number }}
+                </li>
+                
+                <li class="list-group-item">
+                    <strong>Idioma: </strong>
+                    @for (lang of country.languages; track $index) {
+                        @if (!$last) { {{ lang.name }}, }
+                        @else { {{lang.name}}. }
+                    }
+                </li>
+                
+                <li class="list-group-item">
+                    <strong>Superficie: </strong>{{ country.area.kilometers | number }} km<sup>2</sup>
+                </li>
+                
+                <li class="list-group-item">
+                    <strong>Continente: </strong>{{ country.continents }}
+                </li>
+                
+                <li class="list-group-item">
+                    <strong>Moneda: </strong>
+                    @for (currency of country.currencies; track $index){
+                        @if (!$last){ {{ currency.code }}{{ currency.symbol }}, }
+                        @else { {{ currency.code }}{{ currency.symbol }}. }
+                    }
+                </li>
+                
+                <li class="list-group-item">
+                    <strong>Gentilicio: </strong>{{ country.demonyms.eng.f }} - {{ country.demonyms.eng.f }}
+                </li>
+                
+                <li class="list-group-item">
+                    <strong>Código: </strong>{{ country.codes.ccn3 | number }}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="row mt-2">
+        <div class="col">
+            <h3>Traducciones</h3>
+            <div class="d-flex flex-wrap">
+                @for (translation of country.names.translations | keyvalue; track translation.key) {
+                    <span class="badge bg-primary m-1">{{ translation.key }} - {{ translation.value.common }}</span>
+                }
             </div>
         </div>
     </div>
+    
 }
+
+
 @else {
     <ng-container *ngTemplateOutlet="loading"></ng-container>
 }

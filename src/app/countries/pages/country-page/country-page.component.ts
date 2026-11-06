@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CountriesService } from '../../services/countries.service';
 import { SearchTerm } from '../../../../environments/env';
@@ -13,7 +13,8 @@ import { switchMap } from 'rxjs';
 })
 export class CountryPageComponent implements OnInit{
 
-  public country?:Object;
+  private _country = signal<Object | null>(null);
+  public country = this._country.asReadonly();
 
   constructor(
     private activatedRoute:ActivatedRoute,
@@ -31,7 +32,11 @@ export class CountryPageComponent implements OnInit{
         if(!country || !country.data.objects.length) {
           return this.router.navigateByUrl('');
         }
-        return this.country = country.data.objects[0];
+        return this._country.set(country.data.objects[0]);
       });
-    };
+  };
+
+  get getCountry(){
+    return this.country();
+  }
 }

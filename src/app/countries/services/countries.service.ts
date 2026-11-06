@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { catchError, EMPTY } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
 import { Country, Object } from '../interfaces/country';
 import { env, SearchTerm } from '../../../environments/env';
@@ -16,11 +16,11 @@ export class CountriesService {
     constructor(private httpClient: HttpClient) { }
     
     //! COMO LA PETICION LA HACE EL FRONT, LA API_KEY QUEDA EXPUESTA
-    searchByTerm( term:string, searchTerm: SearchTerm ): void{
+    searchByTerm( term:string, searchTerm: SearchTerm ): Observable<Country | null>{
 
         const headers = new HttpHeaders()
             .set('Authorization', `Bearer ${this.apiKey}`);
-        let params = new HttpParams();
+        let params = new HttpParams().set('limit',20);
         let searchUrl = '';
         switch (searchTerm) {
             
@@ -40,25 +40,18 @@ export class CountriesService {
                 break;
             
             case SearchTerm.AlphaCode3:
-                searchUrl = `${this.apiUrl}/codes.aplha3`;
-                params = params.set('q',term);
+                searchUrl = `${this.apiUrl}/codes.alpha_3/${term}`;
+                params = params.set('pretty',1);
                 break;
 
             default:
                 throw new Error("Invalid search term.");
         }
         
-        this.httpClient.get<Country>(searchUrl,{headers, params})
+        return this.httpClient.get<Country>(searchUrl,{headers, params})
             .pipe(
-                catchError( error => {
-                    console.error(error);
-                    return EMPTY;
-                })
-            )
-            .subscribe(countries => {
-                if(!countries.data.objects.length) return;
-                this._countries.set(countries.data.objects);
-            });
+                catchError( error => of(null))
+            );
     }
 
 }

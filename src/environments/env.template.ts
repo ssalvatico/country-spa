@@ -3,4 +3,9 @@ export const env_template = {
     API_KEY : '',
 };
 
-export enum searchTerm {};
+export enum SearchTerm {
+    Capital,
+    Country,
+    Region,
+    AlphaCode3,
+}

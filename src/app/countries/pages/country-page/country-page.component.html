@@ -1,1 +1,18 @@
-<p>country-page works!</p>
+@if (country) {
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <h2>Pais: <strong>{{ country.names.common }}</strong></h2>
+            </div>
+        </div>
+    </div>
+}
+@else {
+    <ng-container *ngTemplateOutlet="loading"></ng-container>
+}
+
+<ng-template #loading>
+    <div class="alert alert-info">
+        Espere por favor
+    </div>
+</ng-template>

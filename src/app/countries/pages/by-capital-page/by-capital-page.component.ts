@@ -15,13 +15,16 @@ export class ByCapitalPageComponent {
   public txtSearchInput!:ElementRef<HTMLInputElement>;
 
   private countries = signal<Object[]>([]);
+  public isLoading: boolean = false;
 
   constructor(private countryService:CountriesService ){}
 
   searchByCapital( value:string ){
+    this.isLoading = true
     if(!value) return;
     this.countryService.searchByTerm( value, SearchTerm.Capital )
       .subscribe(countries => {
+        this.isLoading = false;
         return (countries) ? this.countries.set(countries.data.objects) : [];
       });
   }

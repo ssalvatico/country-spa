@@ -2,7 +2,8 @@
     type="text"
     [placeholder]="placeholder"
     class="form-control"
-    (keyup.enter)="emitInputResult()"
+    /* (keyup.enter)="emitInputResult()" */
+    (keyup)="onKeyPress(txtSearchInput.value)"
     #txtSearchInput
 >
 <!-- Otra opcion podria haber sido esta (ver tambien el .ts): -->

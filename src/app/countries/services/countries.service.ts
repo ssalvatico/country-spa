@@ -51,7 +51,6 @@ export class CountriesService {
         return this.httpClient.get<Country>(searchUrl,{headers, params})
             .pipe(
                 catchError( () => of(null)),
-                delay( 500 )
             );
     }
 

@@ -15,12 +15,16 @@ export class ByRegionPageComponent {
   public txtSearchInput!:ElementRef<HTMLInputElement>;
   private countries = signal<Object[]>([]);
 
+  public isLoading: boolean = false;
+  
   constructor(private countryService:CountriesService ){}
-
+  
   searchByRegion( value:string ){
+    this.isLoading = true;
     if(!value) return;
     this.countryService.searchByTerm( value, SearchTerm.Region )
-      .subscribe(countries => {
+    .subscribe(countries => {
+        this.isLoading = false;
         return (countries) ? this.countries.set(countries.data.objects) : [];
       });
   }

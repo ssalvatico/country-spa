@@ -20,8 +20,8 @@ export class ByCapitalPageComponent {
   constructor(private countryService:CountriesService ){}
 
   searchByCapital( value:string ){
-    this.isLoading = true
     if(!value) return;
+    this.isLoading = true;
     this.countryService.searchByTerm( value, SearchTerm.Capital )
       .subscribe(countries => {
         this.isLoading = false;

@@ -1,18 +1,16 @@
-<h2>Por continente</h2>
-<hr>
+<h2>By Region</h2>
 
 <div class="row">
     <div class="col">
         <app-shared-searchbox
-            placeholder="Buscar por capital..."
-            (onValue)="searchByRegion($event)"
+            placeholder="Search by region..."
+            (onDebounce)="searchByRegion($event)"
         ></app-shared-searchbox>
     </div>
 </div>
 
 <div class="row">
     <div class="col">
-        <hr>
         @if (isLoading) {
             <app-shared-loading-spinner></app-shared-loading-spinner>
         }

@@ -1,7 +1,8 @@
 @if (countries.length === 0) {
-    <div class="alert-warning text-center">
-        No hay países para mostrar
-    </div>    
+    
+    <div class="alert-warning text-center fade-in">
+        No countries to show
+    </div>
 }
 
 @else {
@@ -14,16 +15,16 @@
             <tr>
                 <th class="text-center">#</th>
                 <th class="text-center">Icon</th>
-                <th class="text-center">Bandera</th>
-                <th class="text-center">Nombre</th>
+                <th class="text-center">Flag</th>
+                <th class="text-center">Name</th>
                 <th class="text-center">Capital</th>
-                <th class="text-center">Población</th>
+                <th class="text-center">Population</th>
                 <th class="text-center"></th>
             </tr>
         </thead>
         <tbody>
-            @for (country of countries; track $index) {
-                <tr>
+            @for (country of countries; track renderKey + '-' + $index) {
+                <tr class="result-row" [style.animation-delay]="($index * 60) + 'ms'">
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td class="text-center">{{ country.flag.emoji }}</td>
                     <td class="text-center"><img src="{{ country.flag.url_svg }}" alt="{{ country.names.common }}"></td>
@@ -36,12 +37,3 @@
         </tbody>
     </table>
 </ng-template>
-
-
-
-
-<!-- <ul>
-        @for (country of countries(); track $index) {
-            <li>{{ country.capitals[0].name }} - {{ country.names.official }}</li>
-            }
-</ul> -->

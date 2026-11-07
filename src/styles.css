@@ -1,1 +1,318 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   Tema "papel viejo" — CountrySPA
+   Colores como tokens para poder ajustarlos en un solo lugar.
+   ========================================================================== */
+
+:root {
+  --paper-base: #e8d4a6;
+  --paper-light: #f4e6c4;
+  --paper-stain: #c9a46a;
+  --ink: #1c1208;
+  --ink-soft: #33220f;
+  --ink-faded: #5a4128;
+  --highlight: #d9b77a;
+  --accent: #7a3e12;
+  --accent-dark: #4e2509;
+  --rule: #9c7647;
+
+  --font-body: "IM Fell English", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-heading: "IM Fell English SC", "IM Fell English", Georgia, serif;
+
+  /* Bootstrap: que los componentes hereden la paleta de papel */
+  --bs-body-bg: transparent;
+  --bs-body-color: var(--ink);
+  --bs-link-color: var(--accent);
+  --bs-link-hover-color: var(--accent-dark);
+  --bs-border-color: var(--rule);
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--ink);
+  --bs-table-border-color: var(--rule);
+  --bs-table-hover-bg: rgba(122, 62, 18, 0.08);
+  --bs-table-hover-color: var(--ink);
+  --bs-list-group-bg: transparent;
+  --bs-list-group-color: var(--ink);
+  --bs-list-group-border-color: var(--rule);
+  --bs-list-group-active-bg: var(--highlight);
+  --bs-list-group-active-border-color: var(--accent-dark);
+  --bs-list-group-active-color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Fondo: papel con manchas, textura de grano y bordes envejecidos
+   -------------------------------------------------------------------------- */
+html {
+  background: var(--paper-base);
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--ink);
+  background-color: var(--paper-base);
+  background-image:
+    radial-gradient(ellipse at 50% 45%, rgba(255, 246, 220, 0) 40%, rgba(94, 58, 24, 0.55) 100%),
+    radial-gradient(circle at 18% 22%, rgba(201, 164, 106, 0.35) 0, transparent 22%),
+    radial-gradient(circle at 82% 70%, rgba(201, 164, 106, 0.30) 0, transparent 26%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.22  0 0 0 0 0.08  0 0 0 0.45 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  background-size: cover, cover, cover, auto;
+}
+
+/* Contenedor principal: un poco de aire para que el papel se lea como hoja */
+body.container {
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+/* --------------------------------------------------------------------------
+   Tipografía
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--accent-dark);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgba(255, 246, 220, 0.6);
+}
+
+h2 {
+  border-bottom: 3px double var(--rule);
+  padding-bottom: 0.25rem;
+}
+
+strong, b {
+  color: var(--accent-dark);
+}
+
+em, i {
+  color: var(--ink-soft);
+}
+
+p, li {
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--accent-dark);
+}
+
+sup {
+  color: var(--ink-soft);
+}
+
+/* Separador ornamental */
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  opacity: 0.8;
+  margin: 1.25rem 0;
+  position: relative;
+}
+
+hr::after {
+  content: "❦";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 0.6rem;
+  background: var(--paper-base);
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar (lista de navegación)
+   -------------------------------------------------------------------------- */
+.list-group {
+  --bs-list-group-border-radius: 0;
+  box-shadow: 2px 3px 0 rgba(94, 58, 24, 0.18);
+}
+
+.list-group-item {
+  background: rgba(244, 230, 196, 0.55);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.list-group-item:hover {
+  background: rgba(244, 230, 196, 0.95);
+  padding-left: 1.4rem;
+}
+
+.list-group-item.active {
+  background: var(--highlight);
+  border-color: var(--accent-dark);
+  border-left: 5px solid var(--accent-dark);
+  color: var(--ink);
+  font-weight: bold;
+  text-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   Tablas
+   -------------------------------------------------------------------------- */
+.table {
+  --bs-table-bg: transparent;
+  background: rgba(244, 230, 196, 0.35);
+  border: 1px solid var(--rule);
+  box-shadow: 3px 4px 0 rgba(94, 58, 24, 0.15);
+}
+
+.table thead th, td {
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  color: var(--accent-dark);
+  border-bottom: 2px double var(--rule);
+  font-size: 1.05rem;
+}
+
+.table > :not(caption) > * > * {
+  border-color: rgba(156, 118, 71, 0.5);
+}
+
+.table-hover > tbody > tr:hover > * {
+  background-color: rgba(122, 62, 18, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Imágenes (banderas), tarjetas y badges
+   -------------------------------------------------------------------------- */
+.img-thumbnail {
+  background: var(--paper-light);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 0.35rem;
+  box-shadow: 3px 4px 0 rgba(94, 58, 24, 0.22);
+  filter: sepia(0.25) contrast(0.95);
+}
+
+td img {
+  filter: sepia(0.2);
+  border: 1px solid var(--rule);
+  box-shadow: 1px 2px 0 rgba(94, 58, 24, 0.2);
+}
+
+.badge.bg-primary {
+  background-color: var(--highlight) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--accent-dark);
+  border-radius: 0;
+  font-family: var(--font-body);
+  font-weight: normal;
+  font-size: 0.95rem;
+}
+
+.list-group-item strong {
+  color: var(--accent-dark);
+}
+
+/* --------------------------------------------------------------------------
+   Alertas y campos de texto
+   -------------------------------------------------------------------------- */
+.alert-warning,
+.alert-info {
+  background: rgba(201, 164, 106, 0.35);
+  border: 1px dashed var(--rule);
+  border-radius: 0;
+  color: var(--ink);
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+}
+
+.alert-info {
+  background: rgba(244, 230, 196, 0.6);
+}
+
+.form-control {
+  background: rgba(244, 230, 196, 0.6);
+  border: 1px solid var(--rule);
+  border-bottom: 2px solid var(--accent);
+  border-radius: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+}
+
+.form-control::placeholder {
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.form-control:focus {
+  background: var(--paper-light);
+  border-color: var(--accent);
+  border-bottom-color: var(--accent-dark);
+  box-shadow: 0 2px 0 rgba(122, 62, 18, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Utilidades
+   -------------------------------------------------------------------------- */
+::selection {
+  background: var(--highlight);
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Animaciones de resultados
+   -------------------------------------------------------------------------- */
+@keyframes ink-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes ink-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Cada fila aparece en cascada (el delay se pone inline desde el template) */
+.result-row {
+  opacity: 0;
+  animation: ink-rise 0.5s ease-out forwards;
+}
+
+.result-row td {
+  transition: background-color 0.2s ease;
+}
+
+.fade-in {
+  animation: ink-fade 0.6s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result-row,
+  .fade-in {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 1rem;
+  }
+}

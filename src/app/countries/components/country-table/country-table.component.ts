@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Object } from '../../interfaces/country';
 
 @Component({
@@ -14,10 +14,17 @@ import { Object } from '../../interfaces/country';
     }
   `,
 })
-export class CountryTableComponent {
+export class CountryTableComponent implements OnChanges {
 
   @Input()
   public countries: Object[] = [];
+
+  // Cambia en cada nueva búsqueda, así las filas se vuelven a crear y la animación se repite
+  public renderKey = 0;
+
+  ngOnChanges(): void {
+    this.renderKey++;
+  }
 
   test(){
     console.log(this.countries);

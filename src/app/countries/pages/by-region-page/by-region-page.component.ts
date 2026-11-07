@@ -20,8 +20,8 @@ export class ByRegionPageComponent {
   constructor(private countryService:CountriesService ){}
   
   searchByRegion( value:string ){
-    this.isLoading = true;
     if(!value) return;
+    this.isLoading = true;
     this.countryService.searchByTerm( value, SearchTerm.Region )
     .subscribe(countries => {
         this.isLoading = false;

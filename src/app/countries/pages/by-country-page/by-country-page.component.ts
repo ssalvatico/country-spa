@@ -21,8 +21,8 @@ export class ByCountryPageComponent {
   constructor(private countryService:CountriesService ){}
   
   searchByCountry( value:string ){
-    this.isLoading = true;
     if(!value) return;
+    this.isLoading = true;
     this.countryService.searchByTerm( value, SearchTerm.Country )
     .subscribe(countries => {
         this.isLoading = false;

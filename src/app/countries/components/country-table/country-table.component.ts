@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Object } from '../../interfaces/country';
+import { Object } from '../../interfaces/country.interface';
 
 @Component({
   selector: 'app-countries-country-table',

@@ -1,4 +1,4 @@
-export const env_template = {
+export const env = {
     API_URL : '',
     API_KEY : '',
 };

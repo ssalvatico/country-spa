@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CountriesService } from '../../services/countries.service';
 import { SearchTerm } from '../../../../environments/env';
-import { Object } from '../../interfaces/country';
+import { Object } from '../../interfaces/country.interface';
 import { switchMap } from 'rxjs';
 
 @Component({

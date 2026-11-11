@@ -1,11 +1,20 @@
 <h2>By Region</h2>
 
 <div class="row">
-    <div class="col">
-        <app-shared-searchbox
+    <div class="col d-flex w-100 mt-2 mb-4" style="gap: 0.5rem;">
+        @for (region of regions; track $index){
+            <button
+                class="btn flex-fill"
+                (click)="searchByRegion(region)"
+                [class.active]="selectedRegion === region"
+                [disabled]="selectedRegion === region"
+            >{{ region | uppercase }}</button>
+        }
+
+        <!-- <app-shared-searchbox
             placeholder="Search by region..."
             (onDebounce)="searchByRegion($event)"
-        ></app-shared-searchbox>
+        ></app-shared-searchbox> -->
     </div>
 </div>
 

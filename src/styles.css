@@ -316,3 +316,49 @@ td img {
     font-size: 1rem;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Botones
+   -------------------------------------------------------------------------- */
+button{
+  background-color: var(--paper-stain);
+  border: 1px solid var(--ink-soft);
+  color: var(--ink);
+  font-weight: bold;
+  letter-spacing: 0.2dvh; font-family: var(--font-heading);
+  box-shadow: 0 4px 0 var(--ink);
+
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+button:hover,
+button:focus-visible {
+  background-color: var(--ink-soft);
+  color: var(--paper-stain);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--ink);
+}
+
+button:active {
+  cursor: pointer;
+  background-color: var(--ink-soft);
+  color: var(--paper-stain);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: var(--ink-soft);
+  color: var(--paper-stain);
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+}
+
+
+

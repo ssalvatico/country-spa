@@ -4,6 +4,7 @@
     class="form-control mb-4"
     /* (keyup.enter)="emitInputResult()" */
     (keyup)="onKeyPress(txtSearchInput.value)"
+    [value]="initialValue"
     #txtSearchInput
 >
 <!-- Otra opcion podria haber sido esta (ver tambien el .ts): -->

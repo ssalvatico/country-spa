@@ -1,7 +1,7 @@
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import { CountriesService } from '../../services/countries.service';
 import { SearchTerm } from '../../../../environments/env';
-import { Object } from '../../interfaces/country';
+import { Object } from '../../interfaces/country.interface';
 
 @Component({
   selector: 'app-countries-by-capital-page',
@@ -9,13 +9,15 @@ import { Object } from '../../interfaces/country';
   styles: ``,
   templateUrl: './by-capital-page.component.html',
 })
-export class ByCapitalPageComponent {
+export class ByCapitalPageComponent implements OnInit {
 
   @ViewChild('txtSearchInput')
   public txtSearchInput!:ElementRef<HTMLInputElement>;
 
   private countries = signal<Object[]>([]);
   public isLoading: boolean = false;
+
+  public initialValue:string = '';
 
   constructor(private countryService:CountriesService ){}
 
@@ -30,5 +32,11 @@ export class ByCapitalPageComponent {
   }
   get getCountries(){
     return this.countries.asReadonly()();
+  }
+
+  ngOnInit(): void {
+    console.log(this.countryService.cacheStore);
+    this.initialValue = this.countryService.cacheStore.byCapital.term;
+    this.countries.set(this.countryService.cacheStore.byCapital.countries);
   }
 }

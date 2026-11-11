@@ -1,7 +1,7 @@
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import { CountriesService } from '../../services/countries.service';
 import { SearchTerm } from '../../../../environments/env';
-import { Object } from '../../interfaces/country';
+import { Object } from '../../interfaces/country.interface';
 
 @Component({
   selector: 'app-countries-by-country-page',
@@ -9,7 +9,7 @@ import { Object } from '../../interfaces/country';
   styles: ``,
   templateUrl: './by-country-page.component.html',
 })
-export class ByCountryPageComponent {
+export class ByCountryPageComponent implements OnInit {
 
   @ViewChild('txtSearchInput')
   public txtSearchInput!:ElementRef<HTMLInputElement>;
@@ -17,6 +17,8 @@ export class ByCountryPageComponent {
   private countries = signal<Object[]>([]);
 
   public isLoading: boolean = false;
+
+  public initialValue = '';
   
   constructor(private countryService:CountriesService ){}
   
@@ -32,5 +34,11 @@ export class ByCountryPageComponent {
 
   get getCountries(){
     return this.countries.asReadonly()();
+  }
+
+  ngOnInit(): void {
+    console.log(this.countryService.cacheStore);
+    this.initialValue = this.countryService.cacheStore.byCountry.term;
+    this.countries.set(this.countryService.cacheStore.byCountry.countries);
   }
 }

@@ -5,6 +5,7 @@
         <app-shared-searchbox
             placeholder="Search by country..."
             (onDebounce)="searchByCountry($event)"
+            [initialValue]="initialValue"
         ></app-shared-searchbox>
     </div>
 </div>

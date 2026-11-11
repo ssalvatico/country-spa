@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
-import { catchError, delay, Observable, of } from 'rxjs';
+import { Injectable, OnInit, signal } from '@angular/core';
+import { catchError, Observable, of, tap } from 'rxjs';
 
-import { Country, Object } from '../interfaces/country';
+import { Country, Object } from '../interfaces/country.interface';
 import { env, SearchTerm } from '../../../environments/env';
+import { CacheStore } from '../interfaces/cache-store.interface';
+import { Region } from '../interfaces/region.type';
 
 @Injectable({providedIn: 'root'})
 export class CountriesService {
@@ -12,6 +14,12 @@ export class CountriesService {
     private apiKey:string = env.API_KEY;
     private _countries = signal<Object[]>([]);
     public countries = this._countries.asReadonly();
+
+    public cacheStore:CacheStore = {
+        byCapital   : {term     : '', countries : []},
+        byCountry   : {term     : '', countries : []},
+        byRegion    : {term     : '', countries : []},
+    };
 
     constructor(private httpClient: HttpClient) { }
     
@@ -22,21 +30,29 @@ export class CountriesService {
             .set('Authorization', `Bearer ${this.apiKey}`);
         let params = new HttpParams().set('limit',20);
         let searchUrl = '';
+        let cacheStoreField:{
+            term        :String|Region,
+            countries   :Object[],
+        };
+
         switch (searchTerm) {
             
             case SearchTerm.Capital:
                 searchUrl = `${this.apiUrl}/capitals`;
                 params = params.set('q', term);
+                cacheStoreField = this.cacheStore.byCapital;
                 break;
             
             case SearchTerm.Country:
                 searchUrl = `${this.apiUrl}/names.common`;
                 params = params.set('q',term);
+                cacheStoreField = this.cacheStore.byCountry;
                 break;
                 
             case SearchTerm.Region:
                 searchUrl = `${this.apiUrl}`;
                 params = params.set('region',term);
+                cacheStoreField = this.cacheStore.byRegion;
                 break;
             
             case SearchTerm.AlphaCode3:
@@ -50,8 +66,12 @@ export class CountriesService {
         
         return this.httpClient.get<Country>(searchUrl,{headers, params})
             .pipe(
+                tap( ({ data }:Country) => {
+                    if(searchTerm === SearchTerm.AlphaCode3) return;
+                    cacheStoreField.term = term;
+                    cacheStoreField.countries = data.objects;
+                }),
                 catchError( () => of(null)),
             );
     }
-
 }

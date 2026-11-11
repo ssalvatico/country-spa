@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable, OnInit, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 
 import { Country, Object } from '../interfaces/country.interface';
@@ -8,7 +8,7 @@ import { CacheStore } from '../interfaces/cache-store.interface';
 import { Region } from '../interfaces/region.type';
 
 @Injectable({providedIn: 'root'})
-export class CountriesService {
+export class CountriesService{
 
     private apiUrl:string = env.API_URL;
     private apiKey:string = env.API_KEY;
@@ -21,8 +21,18 @@ export class CountriesService {
         byRegion    : {term     : '', countries : []},
     };
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient) {
+        this.loadFromLocalStorage();
+    }
     
+    private saveToLocalStorage(){
+        localStorage.setItem('cacheStore', JSON.stringify(this.cacheStore))
+    }
+    private loadFromLocalStorage(){
+        if(!localStorage.getItem('cacheStore')) return;
+        this.cacheStore = JSON.parse( localStorage.getItem( 'cacheStore' )! );
+    }
+
     //! COMO LA PETICION LA HACE EL FRONT, LA API_KEY QUEDA EXPUESTA
     searchByTerm( term:string, searchTerm: SearchTerm ): Observable<Country | null>{
 
@@ -71,6 +81,7 @@ export class CountriesService {
                     cacheStoreField.term = term;
                     cacheStoreField.countries = data.objects;
                 }),
+                tap( () => this.saveToLocalStorage() ),
                 catchError( () => of(null)),
             );
     }

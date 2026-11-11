@@ -30,6 +30,9 @@ export class ByCapitalPageComponent implements OnInit {
         return (countries) ? this.countries.set(countries.data.objects) : [];
       });
   }
+
+  clearSearch(){ console.log('clear', SearchTerm.Capital); }
+
   get getCountries(){
     return this.countries.asReadonly()();
   }

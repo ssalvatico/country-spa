@@ -1,12 +1,19 @@
-<input
-    type="text"
-    [placeholder]="placeholder"
-    class="form-control mb-4"
-    /* (keyup.enter)="emitInputResult()" */
-    (keyup)="onKeyPress(txtSearchInput.value)"
-    [value]="initialValue"
-    #txtSearchInput
->
+<div class="col d-flex mt-2 mb-4" style="gap: 0.5rem;">
+
+    <input
+        type="text"
+        [placeholder]="placeholder"
+        class="form-control"
+        /* (keyup.enter)="emitInputResult()" */
+        (keyup)="onKeyPress(txtSearchInput.value)"
+        [value]="initialValue"
+        #txtSearchInput
+    >
+    <button 
+        class="btn flex-fill bi bi-trash"
+        (click)="clearSearch()"
+    >Clear search</button>
+</div>
 <!-- Otra opcion podria haber sido esta (ver tambien el .ts): -->
 <!-- <input
     type="text"

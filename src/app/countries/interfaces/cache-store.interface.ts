@@ -11,9 +11,13 @@ export interface CacheStore {
 export interface TermCountries {
     term        :string,
     countries   :Object[],
+    page        :number,
+    total       :number,
 }
 
 export interface RegionCountries {
     term        :Region,
     countries   :Object[],
+    page        :number,
+    total       :number,
 }

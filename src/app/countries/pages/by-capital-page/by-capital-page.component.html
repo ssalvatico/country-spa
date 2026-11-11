@@ -16,6 +16,12 @@
         @if (isLoading) {
             <app-shared-loading-spinner></app-shared-loading-spinner>
         }
+        <app-shared-pagination
+            [total]="total"
+            [pageSize]="pageSize"
+            [currentPage]="page"
+            (pageChange)="changePage($event)"
+        ></app-shared-pagination>
         <app-countries-country-table [countries]="getCountries"></app-countries-country-table>
     </div>
 </div>

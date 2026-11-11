@@ -1,0 +1,43 @@
+<div class="mb-3">
+    @if (totalPages > 1) {
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center flex-wrap mb-2">
+
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button
+                        class="page-link"
+                        type="button"
+                        aria-label="Previous page"
+                        [disabled]="currentPage === 1"
+                        (click)="go(currentPage - 1)"
+                    >‹ Prev</button>
+                </li>
+
+                @for (page of pages; track page) {
+                    <li class="page-item" [class.active]="page === currentPage">
+                        <button
+                            class="page-link"
+                            type="button"
+                            [attr.aria-current]="page === currentPage ? 'page' : null"
+                            (click)="go(page)"
+                        >{{ page }}</button>
+                    </li>
+                }
+
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <button
+                        class="page-link"
+                        type="button"
+                        aria-label="Next page"
+                        [disabled]="currentPage === totalPages"
+                        (click)="go(currentPage + 1)"
+                    >Next ›</button>
+                </li>
+
+            </ul>
+            <p class="page-info text-center small mb-0">
+                Page {{ currentPage }} of {{ totalPages }} · {{ total }} countries
+            </p>
+        </nav>
+    }
+</div>

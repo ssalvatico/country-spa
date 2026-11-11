@@ -16,9 +16,9 @@ export class CountriesService{
     public countries = this._countries.asReadonly();
 
     public cacheStore:CacheStore = {
-        byCapital   : {term     : '', countries : []},
-        byCountry   : {term     : '', countries : []},
-        byRegion    : {term     : '', countries : []},
+        byCapital   : {term     : '', countries : [], page : 1, total : 0},
+        byCountry   : {term     : '', countries : [], page : 1, total : 0},
+        byRegion    : {term     : '', countries : [], page : 1, total : 0},
     };
 
     constructor(private httpClient: HttpClient) {
@@ -30,14 +30,20 @@ export class CountriesService{
             case SearchTerm.Capital:
                 this.cacheStore.byCapital.countries = [];
                 this.cacheStore.byCapital.term = '';
+                this.cacheStore.byCapital.page = 1;
+                this.cacheStore.byCapital.total = 0;
                 break;
             case SearchTerm.Country:
                 this.cacheStore.byCountry.countries = [];;
                 this.cacheStore.byCountry.term = '';;
+                this.cacheStore.byCountry.page = 1;
+                this.cacheStore.byCountry.total = 0;
                 break;
             case SearchTerm.Region:
                 this.cacheStore.byRegion.countries = [];;
                 this.cacheStore.byRegion.term = '';;
+                this.cacheStore.byRegion.page = 1;
+                this.cacheStore.byRegion.total = 0;
                 break;
             default:
                 break;
@@ -54,15 +60,20 @@ export class CountriesService{
     }
 
     //! COMO LA PETICION LA HACE EL FRONT, LA API_KEY QUEDA EXPUESTA
-    searchByTerm( term:string, searchTerm: SearchTerm ): Observable<Country | null>{
+    searchByTerm( term:string, searchTerm: SearchTerm, page:number = 1 ): Observable<Country | null>{
 
         const headers = new HttpHeaders()
             .set('Authorization', `Bearer ${this.apiKey}`);
-        let params = new HttpParams().set('limit',20);
+        const pageSize = 30;
+        let params = new HttpParams()
+            .set('limit', pageSize)
+            .set('offset', (page - 1) * pageSize);
         let searchUrl = '';
         let cacheStoreField:{
             term        :String|Region,
             countries   :Object[],
+            page        :number,
+            total       :number,
         };
 
         switch (searchTerm) {
@@ -100,6 +111,8 @@ export class CountriesService{
                     if(searchTerm === SearchTerm.AlphaCode3) return;
                     cacheStoreField.term = term;
                     cacheStoreField.countries = data.objects;
+                    cacheStoreField.page = page;
+                    cacheStoreField.total = data.meta.total;
                 }),
                 tap( () => this.saveToLocalStorage() ),
                 catchError( () => of(null)),

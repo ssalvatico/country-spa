@@ -17,5 +17,11 @@
             <app-shared-loading-spinner></app-shared-loading-spinner>
         }
         <app-countries-country-table [countries]="getCountries"></app-countries-country-table>
+        <app-shared-pagination
+            [total]="total"
+            [pageSize]="pageSize"
+            [currentPage]="page"
+            (pageChange)="changePage($event)"
+        ></app-shared-pagination>
     </div>
 </div>

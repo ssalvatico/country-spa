@@ -360,5 +360,39 @@ button:disabled {
   box-shadow: none;
 }
 
+/* --------------------------------------------------------------------------
+   Detalle de país: bandera y datos siempre en la misma fila
+   -------------------------------------------------------------------------- */
+.flag-info-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 1rem;
+}
 
+.flag-info-row > .flag-col {
+  flex: 0 0 40%;
+  max-width: 40%;
+  min-width: 0;
+}
 
+.flag-info-row > .flag-col img {
+  width: 100%;
+  height: auto;
+}
+
+.flag-info-row > .info-col {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.flag-info-row .list-group-item {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 576px) {
+  .flag-info-row .list-group-item {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+  }
+}

@@ -25,6 +25,26 @@ export class CountriesService{
         this.loadFromLocalStorage();
     }
     
+    clearCache(searchTerm:SearchTerm){
+        switch(searchTerm){
+            case SearchTerm.Capital:
+                this.cacheStore.byCapital.countries = [];
+                this.cacheStore.byCapital.term = '';
+                break;
+            case SearchTerm.Country:
+                this.cacheStore.byCountry.countries = [];;
+                this.cacheStore.byCountry.term = '';;
+                break;
+            case SearchTerm.Region:
+                this.cacheStore.byRegion.countries = [];;
+                this.cacheStore.byRegion.term = '';;
+                break;
+            default:
+                break;
+        }
+        this.saveToLocalStorage();
+    }
+
     private saveToLocalStorage(){
         localStorage.setItem('cacheStore', JSON.stringify(this.cacheStore))
     }

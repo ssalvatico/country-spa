@@ -11,6 +11,8 @@ import { Object } from '../../interfaces/country.interface';
 })
 export class ByCapitalPageComponent implements OnInit {
 
+  private searchTerm = SearchTerm.Capital;
+
   @ViewChild('txtSearchInput')
   public txtSearchInput!:ElementRef<HTMLInputElement>;
 
@@ -24,21 +26,24 @@ export class ByCapitalPageComponent implements OnInit {
   searchByCapital( value:string ){
     if(!value) return;
     this.isLoading = true;
-    this.countryService.searchByTerm( value, SearchTerm.Capital )
+    this.countryService.searchByTerm( value, this.searchTerm )
       .subscribe(countries => {
         this.isLoading = false;
         return (countries) ? this.countries.set(countries.data.objects) : [];
       });
   }
 
-  clearSearch(){ console.log('clear', SearchTerm.Capital); }
+  clearSearch(){
+    this.countryService.clearCache(this.searchTerm);
+    this.countries.set([]);
+    this.initialValue = '';
+  }
 
   get getCountries(){
     return this.countries.asReadonly()();
   }
 
   ngOnInit(): void {
-    console.log(this.countryService.cacheStore);
     this.initialValue = this.countryService.cacheStore.byCapital.term;
     this.countries.set(this.countryService.cacheStore.byCapital.countries);
   }

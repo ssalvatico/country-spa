@@ -13,6 +13,8 @@ import { Region } from "../../interfaces/region.type";
 })
 export class ByRegionPageComponent implements OnInit{
 
+  private searchTerm = SearchTerm.Region;
+
   @ViewChild('txtSearchInput')
   public txtSearchInput!:ElementRef<HTMLInputElement>;
   public isLoading: boolean = false;
@@ -29,11 +31,17 @@ export class ByRegionPageComponent implements OnInit{
     if(!value) return;
     this.selectedRegion = value;
     this.isLoading = true;
-    this.countryService.searchByTerm( value, SearchTerm.Region )
+    this.countryService.searchByTerm( value, this.searchTerm )
     .subscribe(countries => {
         this.isLoading = false;
         return (countries) ? this.countries.set(countries.data.objects) : [];
       });
+  }
+
+  clearSearch(){
+    this.countryService.clearCache(this.searchTerm);
+    this.countries.set([]);
+    this.selectedRegion = '';
   }
 
   get getCountries(): Object[]{
@@ -42,7 +50,6 @@ export class ByRegionPageComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.countryService.cacheStore);
     this.selectedRegion = this.countryService.cacheStore.byRegion.term;
     this.countries.set(this.countryService.cacheStore.byRegion.countries);
   }

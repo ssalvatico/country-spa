@@ -11,13 +11,14 @@ import { Object } from '../../interfaces/country.interface';
 })
 export class ByCountryPageComponent implements OnInit {
 
+  private searchTerm = SearchTerm.Country;
+
   @ViewChild('txtSearchInput')
   public txtSearchInput!:ElementRef<HTMLInputElement>;
 
   private countries = signal<Object[]>([]);
 
   public isLoading: boolean = false;
-
   public initialValue = '';
   
   constructor(private countryService:CountriesService ){}
@@ -25,11 +26,17 @@ export class ByCountryPageComponent implements OnInit {
   searchByCountry( value:string ){
     if(!value) return;
     this.isLoading = true;
-    this.countryService.searchByTerm( value, SearchTerm.Country )
+    this.countryService.searchByTerm( value, this.searchTerm )
     .subscribe(countries => {
         this.isLoading = false;
         return (countries) ? this.countries.set(countries.data.objects) : [];
       });
+  }
+
+  clearSearch(){
+    this.countryService.clearCache(this.searchTerm);
+    this.countries.set([]);
+    this.initialValue = '';
   }
 
   get getCountries(){
@@ -37,7 +44,6 @@ export class ByCountryPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.countryService.cacheStore);
     this.initialValue = this.countryService.cacheStore.byCountry.term;
     this.countries.set(this.countryService.cacheStore.byCountry.countries);
   }

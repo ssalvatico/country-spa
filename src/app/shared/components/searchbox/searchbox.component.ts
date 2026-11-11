@@ -50,6 +50,7 @@ export class SearchboxComponent implements OnInit, OnDestroy{
   }
 
   clearSearch(){
+    this.txtSearchInput.nativeElement.value = '';
     this.onClear.emit();
   }
   
